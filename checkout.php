@@ -61,11 +61,6 @@ foreach ($cart as $item) {
             // Enable checkout button only if payment method is selected
             checkoutBtn.disabled = paymentMethod === "";
         }
-
-        function toggleMenu() {
-            var sidebar = document.getElementById("sidebar");
-            sidebar.classList.toggle("active");
-        }
     </script>
 </head>
 <body>
