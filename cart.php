@@ -9,12 +9,11 @@ if (isset($_GET['remove'])) {
     $index = $_GET['remove'];
     if (isset($_SESSION['cart'][$index])) {
         unset($_SESSION['cart'][$index]);
-        $_SESSION['cart'] = array_values($_SESSION['cart']); // Re-index
+        $_SESSION['cart'] = array_values($_SESSION['cart']); 
     }
-    header("Location: cart.php"); // Force reload to reflect changes
+    header("Location: cart.php"); 
     exit();
 }
-
 
 // Clear cart
 if (isset($_GET['clear'])) {
