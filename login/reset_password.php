@@ -80,11 +80,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         background: rgb(255, 255, 255);
         color: black;
         font-size: 18px;
+        transition: all 0.3s;
     }
 
     input::placeholder {
         color: gray;
         font-size: 16px;
+    }
+
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 10px rgba(0, 162, 255, 0.8);
+      transform: scale(1.02);
     }
 
     button {
