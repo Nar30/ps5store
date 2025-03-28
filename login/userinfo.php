@@ -19,7 +19,7 @@ $stmt->close();
 
 // Retrieve user's orders and purchase history
 $orders = [];
-$result = $conn->query("SELECT o.order_id, o.total_paid, o.order_date, i.game_name 
+$result = $conn->query("SELECT o.order_id, o.total_paid, o.payment_mode, o.order_date, i.game_name 
                         FROM orders o 
                         JOIN order_items i ON o.order_id = i.order_id 
                         WHERE o.user_id = $user_id 
@@ -28,6 +28,7 @@ $result = $conn->query("SELECT o.order_id, o.total_paid, o.order_date, i.game_na
 while ($row = $result->fetch_assoc()) {
     $orders[$row['order_id']]['total_paid'] = $row['total_paid'];
     $orders[$row['order_id']]['order_date'] = $row['order_date'];
+    $orders[$row['order_id']]['payment_mode'] = $row['payment_mode']; // Store payment method
     $orders[$row['order_id']]['games'][] = $row['game_name'];
 }
 ?>
@@ -200,24 +201,26 @@ while ($row = $result->fetch_assoc()) {
             <a href="../buy.php" class="buy-back">Buy Games</a>
         <?php else: ?>
             <table class="purchase-table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Games</th>
-                        <th>Total Paid</th>
-                        <th>Order Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($orders as $order_id => $order): ?>
-                        <tr>
-                            <td><?php echo $order_id; ?></td>
-                            <td><?php echo implode(", ", $order['games']); ?></td>
-                            <td>₱<?php echo number_format($order['total_paid'], 2); ?></td>
-                            <td><?php echo $order['order_date']; ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
+            <thead>
+    <tr>
+        <th>Order ID</th>
+        <th>Games</th>
+        <th>Total Paid</th>
+        <th>Payment Method</th> <!-- Added this column -->
+        <th>Order Date</th>
+    </tr>
+</thead>
+<tbody>
+    <?php foreach ($orders as $order_id => $order): ?>
+        <tr>
+            <td><?php echo $order_id; ?></td>
+            <td><?php echo implode(", ", $order['games']); ?></td>
+            <td>₱<?php echo number_format($order['total_paid'], 2); ?></td>
+            <td><?php echo htmlspecialchars($order['payment_mode']); ?></td> <!-- Display payment method -->
+            <td><?php echo $order['order_date']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</tbody>
             </table>
             <a href="../buy.php" class="buy-back">Go Back</a>
         <?php endif; ?>
