@@ -206,7 +206,7 @@ while ($row = $result->fetch_assoc()) {
         <th>Order ID</th>
         <th>Games</th>
         <th>Total Paid</th>
-        <th>Payment Method</th> <!-- Added this column -->
+        <th>Payment Method</th>
         <th>Order Date</th>
     </tr>
 </thead>
